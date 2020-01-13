@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:jaxws="http://cxf.apache.org/jaxws"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context-3.0.xsd
+        http://cxf.apache.org/jaxws
+        http://cxf.apache.org/schemas/jaxws.xsd">
+
+    <import resource="classpath:META-INF/cxf/cxf.xml" />
+    <import resource="classpath:META-INF/cxf/cxf-extension-jaxws.xml" />
+    <import resource="classpath:META-INF/cxf/cxf-servlet.xml" />
+
+    <bean id="address" class="server.service.AddressManage"/>
+
+    <!--implementor指定webservice的服务提供者：
+        A.直接给定服务器提供者的类名
+        B.设置为容器的一个bean-->
+    <jaxws:server id="addressService"
+        serviceClass="server.service.AddressManage"
+        address="/Address">
+        <jaxws:serviceBean>
+            <ref bean="address" />
+        </jaxws:serviceBean>
+    </jaxws:server>
+</beans>
